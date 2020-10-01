@@ -1,0 +1,24 @@
+.calendar{
+    border: solid black;
+    display: flex;
+    flex-wrap: wrap;
+    width: 574px;
+}
+
+.calendar-cell{
+    width: 80px;
+    height: 80px;
+    border: 1px solid red
+}
+
+.mini{
+background-color: chartreuse;
+}
+
+.plus{
+background-color: dodgerblue;
+}
+
+.elite{
+background-color: firebrick;
+}
