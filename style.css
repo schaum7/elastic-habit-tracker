@@ -1,35 +1,49 @@
-body{
-    background-color: #4158D0;
-background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.content{
-    margin:auto;
-    width:50%;
-}
-.calendar{
-    
-    display: flex;
-    flex-wrap: wrap;
-    width: 574px;
-    background-color: white;
-}
-
-.calendar-cell{
-    width: 80px;
-    height: 80px;
-    border: 1px solid black
+body {
+  height: 100%;
+  background-color: #4158d0;
+  background-image: linear-gradient(
+    43deg,
+    #4158d0 0%,
+    #c850c0 46%,
+    #ffcc70 100%
+  );
+  background-size: contain;
+  text-align: center;
 }
 
-.mini{
-background-color: chartreuse;
+.content {
+  margin: auto;
+  width: 50%;
+}
+.calendar {
+  display: flex;
+  flex-wrap: wrap;
+  width: 574px;
+  background-color: white;
 }
 
-.plus{
-background-color: dodgerblue;
+.calendar-cell {
+  width: 80px;
+  height: 60px;
+  border: 1px solid black;
 }
 
-.elite{
-background-color: firebrick;
+.mini {
+  background-color: chartreuse;
+}
+
+.plus {
+  background-color: dodgerblue;
+}
+
+.elite {
+  background-color: firebrick;
 }
