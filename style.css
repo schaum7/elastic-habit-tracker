@@ -35,6 +35,9 @@ body {
   height: 60px;
   border: 1px solid black;
 }
+.calendar-cell:hover {
+  transform: scale(110%);
+}
 
 .mini {
   background-color: chartreuse;
