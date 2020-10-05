@@ -9,10 +9,14 @@ const days = [
 ];
 const calendar = document.querySelector(".calendar");
 let habits = {};
+let month = 09;
+let date = new Date(2020, month, 1);
+let firstDay = date.getDay() + 6;
 
 initCalendar();
 
 function initCalendar() {
+  console.log(firstDay);
   if (JSON.parse(localStorage.getItem("habits"))) {
     habits = JSON.parse(localStorage.getItem("habits"));
   }
@@ -24,14 +28,21 @@ function initCalendar() {
     if (i < 7) {
       cell.textContent = days[i];
       cell.classList.add("calendar-head");
+      calendar.appendChild(cell);
     } else {
       cell.classList.add("calendar-day");
-      cell.addEventListener("click", trackHabit);
-      if (habits[i]) {
-        cell.classList.add(habits[i]);
+      if (i < firstDay) {
+        calendar.appendChild(cell);
+      } else if (i >= firstDay && date.getMonth() === month) {
+        cell.innerText = date.getDate();
+        date.setDate(date.getDate() + 1);
+        cell.addEventListener("click", trackHabit);
+        if (habits[i]) {
+          cell.classList.add(habits[i]);
+        }
+        calendar.appendChild(cell);
       }
     }
-    calendar.appendChild(cell);
   }
 }
 
