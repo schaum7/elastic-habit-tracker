@@ -25,12 +25,21 @@ body {
 .content {
   margin: auto;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 560px;
+}
+
+.habit-tabs {
+  min-width: 100%;
+  padding: 1% 0 1% 0;
+  display: flex;
+  justify-content: space-around;
 }
 .calendar {
+  margin-top: 1%;
   display: flex;
   flex-wrap: wrap;
-  width: 560px;
   background-color: white;
 }
 
@@ -56,12 +65,15 @@ body {
 
 .mini {
   background-color: chartreuse;
+  color: black;
 }
 
 .plus {
   background-color: dodgerblue;
+  color: white;
 }
 
 .elite {
   background-color: firebrick;
+  color: white;
 }
