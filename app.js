@@ -9,31 +9,30 @@ const days = [
 ];
 const calendar = document.querySelector(".calendar");
 const tabContainer = document.querySelector(".habit-tabs");
+const btnAddHabit = document.getElementById("addHabit");
+const btnRemoveHabit = document.getElementById("removeHabit");
+const inputHabit = document.getElementById("habitInput");
 
-let activeHabit = 0;
 let habitCategories = ["Sport", "Programmieren", "Achtsamkeit"];
+let activeHabit = habitCategories[0];
 let habitsTrack = {};
 let month = 09;
 
 initCalendar();
 
+btnAddHabit.addEventListener("click", addHabit);
+btnRemoveHabit.addEventListener("click", removeHabit);
+
 function initCalendar() {
   if (JSON.parse(localStorage.getItem("habits"))) {
     habitsTrack = JSON.parse(localStorage.getItem("habits"));
+    habitCategories = Object.keys(habitsTrack);
   } else {
     habitCategories.forEach((habit) => {
-      habitsTrack[habitCategories.indexOf(habit)] = {};
+      habitsTrack[habit] = {};
     });
   }
-
-  habitCategories.forEach((habit) => {
-    let button = document.createElement("button");
-    button.textContent = habit;
-    button.setAttribute("id", habit);
-    button.addEventListener("click", changeHabit);
-    tabContainer.appendChild(button);
-  });
-
+  createButtons();
   drawGrid();
 }
 
@@ -59,8 +58,7 @@ function trackHabit() {
 }
 
 function changeHabit() {
-  activeHabit = habitCategories.indexOf(this.id);
-  console.log(activeHabit);
+  activeHabit = this.id;
   drawGrid();
 }
 
@@ -69,7 +67,6 @@ function drawGrid() {
   let firstDay = date.getDay() + 6;
   calendar.innerHTML = "";
 
-  console.log(habitsTrack);
   for (let i = 0; i < 7 * 7; i++) {
     let cell = document.createElement("div");
     cell.classList.add("calendar-cell");
@@ -93,4 +90,31 @@ function drawGrid() {
       }
     }
   }
+}
+
+function createButtons() {
+  tabContainer.innerHTML = "";
+
+  habitCategories.forEach((habit) => {
+    let button = document.createElement("button");
+    button.textContent = habit;
+    button.setAttribute("id", habit);
+    button.addEventListener("click", changeHabit);
+    tabContainer.appendChild(button);
+  });
+}
+function addHabit() {
+  const habit = inputHabit.value;
+  habitsTrack[habit] = {};
+  habitCategories.push(habit);
+  localStorage.setItem("habits", JSON.stringify(habitsTrack));
+  inputHabit.value = "";
+  initCalendar();
+}
+function removeHabit() {
+  const habit = inputHabit.value;
+  delete habitsTrack[habit];
+  localStorage.setItem("habits", JSON.stringify(habitsTrack));
+  inputHabit.value = "";
+  initCalendar();
 }
