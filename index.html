@@ -4,20 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Elastic Habit Tracker</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+      integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Elastic Habit tracker</h1>
-    <div class="content">
-      <div class="addHabits">
-        <button id="removeHabit">-</button>
-        <input type="text" id="habitInput" />
-        <button id="addHabit">+</button>
-      </div>
-      <div class="habit-tabs"></div>
-      <div class="grid">
-        <div class="calendar"></div>
-      </div>
+    <header>
+      <h1>Elastic Habit tracker</h1>
+    </header>
+    <div class="addHabits">
+      <button id="removeHabit"><i class="far fa-minus-square"></i></button>
+      <input type="text" id="habitInput" />
+      <button id="addHabit"><i class="far fa-plus-square"></i></button>
+    </div>
+    <div class="habit-tabs"></div>
+    <div class="grid">
+      <div class="calendar"></div>
     </div>
     <script src="app.js"></script>
   </body>
