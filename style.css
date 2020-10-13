@@ -25,18 +25,6 @@ body {
   grid-template-areas:
     "navbar navbar"
     "sidebar content";
-}
-
-.navbar {
-  grid-area: navbar;
-  background: var(--main-bg-color);
-  box-shadow: black;
-}
-.sidebar {
-  grid-area: sidebar;
-  background: var(--main-bg-color);
-}
-.content {
   background: var(--main-bg-color); /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right,
@@ -48,7 +36,18 @@ body {
     var(--main-bg-color),
     var(--second-bg-color)
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
 
+.navbar {
+  grid-area: navbar;
+  background: var(--main-bg-color);
+  box-shadow: 0 0 1em black;
+}
+.sidebar {
+  grid-area: sidebar;
+  box-shadow: 0 1em 1em black;
+}
+.content {
   grid-area: content;
   display: grid;
   grid-template-rows: 1fr 1fr 1fr 70%;
