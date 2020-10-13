@@ -1,3 +1,10 @@
+:root {
+  --main-bg-color: #ff5f6d;
+  --second-bg-color: #ffc371;
+  --button-main-color: #ff5f6d;
+  --active-text-color: white;
+}
+
 *,
 ::after,
 ::before {
@@ -7,30 +14,68 @@
 }
 
 body {
-  min-height: 100vh;
-  background: #f3f9a7; /* fallback for old browsers */
+  height: 100vh;
+  background: darkslategrey; /* fallback for old browsers */
+
+  font-family: "Poppins", sans-serif;
+
+  display: grid;
+  grid-template-rows: 10vh 1fr;
+  grid-template-columns: 20vw 1fr;
+  grid-template-areas:
+    "navbar navbar"
+    "sidebar content";
+}
+
+.navbar {
+  grid-area: navbar;
+  background: var(--main-bg-color);
+  box-shadow: black;
+}
+.sidebar {
+  grid-area: sidebar;
+  background: var(--main-bg-color);
+}
+.content {
+  background: var(--main-bg-color); /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right,
-    #cac531,
-    #f3f9a7
+    var(--main-bg-color),
+    var(--second-bg-color)
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to right,
-    #cac531,
-    #f3f9a7
+    var(--main-bg-color),
+    var(--second-bg-color)
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  font-family: "Poppins", sans-serif;
+
+  grid-area: content;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 70%;
+
+  padding: 1%;
+  /* justify-items: center; */
 }
 
-header,
-.addHabits,
-.habit-tabs,
-.grid {
+.content h1 {
+  justify-self: center;
+}
+.addHabits {
+  justify-self: center;
   display: flex;
-  justify-content: center;
   align-items: center;
 }
+.habit-tabs {
+  display: flex;
+  justify-content: space-around;
+}
+.calendar {
+  justify-self: stretch;
+}
 
+.addHabits input {
+  text-align: center;
+}
 .addHabits input,
 .addHabits button {
   padding: 0.5rem;
@@ -40,13 +85,13 @@ header,
 }
 
 .addHabits button {
-  color: #cac531;
+  color: var(--button-main-color);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 .addHabits button:hover {
   color: white;
-  background-color: #cac531;
+  background-color: var(--button-main-color);
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -54,46 +99,38 @@ header,
 .habit-tabs button {
   border: none;
   padding: 1rem;
-  font-size: 2rem;
+  font-size: 1.4rem;
+  font-weight: bold;
   background-color: transparent;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
 
 .habit-tabs button:hover {
-  color: white;
+  color: var(--active-text-color);
 }
 
 .calendar {
-  width: 560px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
 }
 
-.calendar {
-  margin-top: 1%;
-  display: flex;
-  flex-wrap: wrap;
-  background-color: transparent;
-}
-
-.calendar-cell {
-  width: 80px;
-  height: 60px;
-  /* border: px solid black; */
-}
 .calendar-cell:hover {
-  transform: scale(105%);
-  background-color: #cac531;
+  transform: scale(115%);
+  /* background-color: #cac531; */
 }
 .calendar-head {
-  height: 20px;
+  height: 30px;
   font-weight: bold;
-  font-size: smaller;
+  font-size: 1rem;
   text-align: center;
 }
 
 .calendar-day {
   padding: 2px;
+  display: inline-block;
   text-align: center;
+  vertical-align: middle;
   color: black;
   transition: all 0.2s ease-in-out;
 }
@@ -111,4 +148,8 @@ header,
 .elite {
   background-color: firebrick;
   color: white;
+}
+
+.active-tab {
+  color: var(--active-text-color);
 }

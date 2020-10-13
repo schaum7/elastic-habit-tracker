@@ -59,6 +59,11 @@ function trackHabit() {
 
 function changeHabit() {
   activeHabit = this.id;
+  let allButtons = document.querySelectorAll(".habit-tabs button");
+  allButtons.forEach((button) => {
+    button.classList.remove("active-tab");
+  });
+  this.classList.add("active-tab");
   drawGrid();
 }
 
@@ -102,6 +107,7 @@ function createButtons() {
     button.addEventListener("click", changeHabit);
     tabContainer.appendChild(button);
   });
+  document.querySelector(".habit-tabs button").classList.add("active-tab");
 }
 function addHabit() {
   const habit = inputHabit.value;

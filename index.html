@@ -17,16 +17,16 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header>
+    <nav class="navbar"></nav>
+    <div class="sidebar"></div>
+    <div class="content">
       <h1>Elastic Habit tracker</h1>
-    </header>
-    <div class="addHabits">
-      <button id="removeHabit"><i class="far fa-minus-square"></i></button>
-      <input type="text" id="habitInput" />
-      <button id="addHabit"><i class="far fa-plus-square"></i></button>
-    </div>
-    <div class="habit-tabs"></div>
-    <div class="grid">
+      <div class="addHabits">
+        <button id="removeHabit"><i class="far fa-minus-square"></i></button>
+        <input type="text" id="habitInput" placeholder="habit to add/remove" />
+        <button id="addHabit"><i class="far fa-plus-square"></i></button>
+      </div>
+      <div class="habit-tabs"></div>
       <div class="calendar"></div>
     </div>
     <script src="app.js"></script>
