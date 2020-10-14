@@ -7,30 +7,56 @@ const days = [
   "Samstag",
   "Sonntag",
 ];
+
+const months = [
+  "Januar",
+  "Februar",
+  "März",
+  "April",
+  "Mai",
+  "Juni",
+  "Juli",
+  "August",
+  "September",
+  "Oktober",
+  "November",
+  "Dezember",
+];
 const calendar = document.querySelector(".calendar");
 const tabContainer = document.querySelector(".habit-tabs");
 const btnAddHabit = document.getElementById("addHabit");
 const btnRemoveHabit = document.getElementById("removeHabit");
 const inputHabit = document.getElementById("habitInput");
+const monthList = document.querySelector(".months ul");
+const btnAddMonth = document.getElementById("addmonth");
 
 let habitCategories = ["Sport", "Programmieren", "Achtsamkeit"];
-let activeHabit = habitCategories[0];
+let habitYearsMonths = { 2020: [9, 10] };
 let habitsTrack = {};
-let month = 09;
+let activeYear = 2020;
+let activeMonth = 9;
+let activeHabit = habitCategories[0];
 
-initCalendar();
+loadCalendar();
+loadSidebar();
 
 btnAddHabit.addEventListener("click", addHabit);
 btnRemoveHabit.addEventListener("click", removeHabit);
+btnAddMonth.addEventListener("click", addMonth);
 
-function initCalendar() {
+function loadSidebar() {
+  habitYearsMonths[activeYear].forEach((month) => {
+    let li = document.createElement("li");
+    li.textContent = months[month];
+    monthList.appendChild(li);
+  });
+}
+
+function loadCalendar() {
   if (JSON.parse(localStorage.getItem("habits"))) {
-    habitsTrack = JSON.parse(localStorage.getItem("habits"));
-    habitCategories = Object.keys(habitsTrack);
+    loadLocalStorage();
   } else {
-    habitCategories.forEach((habit) => {
-      habitsTrack[habit] = {};
-    });
+    initHabitTrackerObject();
   }
   createButtons();
   drawGrid();
@@ -42,19 +68,19 @@ function trackHabit() {
   if (this.classList.contains("mini")) {
     this.classList.remove("mini");
     this.classList.add("plus");
-    habitsTrack[activeHabit][id] = "plus";
+    habitsTrack[activeYear][activeMonth][activeHabit][id] = "plus";
   } else if (this.classList.contains("plus")) {
     this.classList.remove("plus");
     this.classList.add("elite");
-    habitsTrack[activeHabit][id] = "elite";
+    habitsTrack[activeYear][activeMonth][activeHabit][id] = "elite";
   } else if (this.classList.contains("elite")) {
     this.classList.remove("elite");
-    delete habitsTrack[activeHabit][id];
+    delete habitsTrack[activeYear][activeMonth][activeHabit][id];
   } else {
     this.classList.add("mini");
-    habitsTrack[activeHabit][id] = "mini";
+    habitsTrack[activeYear][activeMonth][activeHabit][id] = "mini";
   }
-  localStorage.setItem("habits", JSON.stringify(habitsTrack));
+  updateLocalStorage();
 }
 
 function changeHabit() {
@@ -68,28 +94,32 @@ function changeHabit() {
 }
 
 function drawGrid() {
-  let date = new Date(2020, month, 1);
+  let date = new Date(2020, activeMonth, 1);
   let firstDay = date.getDay() + 6;
   calendar.innerHTML = "";
 
   for (let i = 0; i < 7 * 7; i++) {
     let cell = document.createElement("div");
+    let text = document.createElement("p");
+    cell.appendChild(text);
     cell.classList.add("calendar-cell");
     cell.setAttribute("id", i + "");
     if (i < 7) {
-      cell.textContent = days[i];
+      text.textContent = days[i];
       cell.classList.add("calendar-head");
       calendar.appendChild(cell);
     } else {
       cell.classList.add("calendar-day");
       if (i < firstDay) {
         calendar.appendChild(cell);
-      } else if (i >= firstDay && date.getMonth() === month) {
-        cell.innerText = date.getDate();
+      } else if (i >= firstDay && date.getMonth() === activeMonth) {
+        text.textContent = date.getDate();
         date.setDate(date.getDate() + 1);
         cell.addEventListener("click", trackHabit);
-        if (habitsTrack[activeHabit][i]) {
-          cell.classList.add(habitsTrack[activeHabit][i]);
+        if (habitsTrack[activeYear][activeMonth][activeHabit][i]) {
+          cell.classList.add(
+            habitsTrack[activeYear][activeMonth][activeHabit][i]
+          );
         }
         calendar.appendChild(cell);
       }
@@ -109,18 +139,61 @@ function createButtons() {
   });
   document.querySelector(".habit-tabs button").classList.add("active-tab");
 }
+
 function addHabit() {
   const habit = inputHabit.value;
   habitsTrack[habit] = {};
   habitCategories.push(habit);
-  localStorage.setItem("habits", JSON.stringify(habitsTrack));
+  updateLocalStorage();
   inputHabit.value = "";
-  initCalendar();
+  loadCalendar();
 }
+
 function removeHabit() {
   const habit = inputHabit.value;
   delete habitsTrack[habit];
-  localStorage.setItem("habits", JSON.stringify(habitsTrack));
+  updateLocalStorage();
   inputHabit.value = "";
-  initCalendar();
+  loadCalendar();
+}
+
+function loadLocalStorage() {
+  habitsTrack = JSON.parse(localStorage.getItem("habits"));
+  Object.keys(habitsTrack).forEach((year) => {
+    habitYearsMonths[year] = {};
+  });
+  habitYearsMonths[activeYear] = Object.keys(habitsTrack[activeYear]);
+  habitCategories = Object.keys(habitsTrack[activeYear][activeMonth]);
+}
+
+function initHabitTrackerObject() {
+  Object.keys(habitYearsMonths).forEach((year) => {
+    habitsTrack[year] = {};
+    habitYearsMonths[year].forEach((month) => {
+      habitsTrack[year][month] = {};
+      habitCategories.forEach((habit) => {
+        habitsTrack[year][month][habit] = {};
+      });
+    });
+  });
+}
+
+function addMonth() {
+  let monthToAdd = Math.max(
+    habitYearsMonths[activeYear].map((x) => parseInt(x))
+  );
+
+  console.log(monthToAdd);
+  if (monthToAdd <= 11) {
+    habitYearsMonths[activeYear].push(monthToAdd);
+    habitsTrack[activeYear][monthToAdd] = {};
+    habitCategories.forEach((habit) => {
+      habitsTrack[activeYear][monthToAdd][habit] = {};
+    });
+  }
+  updateLocalStorage();
+}
+
+function updateLocalStorage() {
+  localStorage.setItem("habits", JSON.stringify(habitsTrack));
 }

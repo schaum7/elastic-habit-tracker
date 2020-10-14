@@ -1,8 +1,25 @@
 :root {
+  --primary-color: #616161;
+  --primary-color-light: #8e8e8e;
+  --primary-color-dark: #373737;
+
+  --secondary-color: #d32f2f;
+  --secondary-color-light: #ff6659;
+  --secondary-color-dark: #9a0007;
+
+  --background-color: #ffffff;
+  --surface-color: #f5f5f5;
+  --error-color: #ffffff;
+
+  --text-on-primary: #ffffff;
+  --text-on-secondary: #ffffff;
+  --text-on-background: #000000;
+  --text-on-surface: #000000;
+  --text-on-error: #000000;
+
   --main-bg-color: #ff5f6d;
   --second-bg-color: #ffc371;
   --button-main-color: #ff5f6d;
-  --active-text-color: white;
 }
 
 *,
@@ -21,38 +38,78 @@ body {
 
   display: grid;
   grid-template-rows: 10vh 1fr;
-  grid-template-columns: 20vw 1fr;
+  grid-template-columns: 1fr 20vw;
   grid-template-areas:
     "navbar navbar"
-    "sidebar content";
-  background: var(--main-bg-color); /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    var(--main-bg-color),
-    var(--second-bg-color)
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    var(--main-bg-color),
-    var(--second-bg-color)
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    "content sidebar";
+  background: var(--background-color); /* fallback for old browsers */
 }
 
 .navbar {
   grid-area: navbar;
-  background: var(--main-bg-color);
-  box-shadow: 0 0 1em black;
+  background: var(--primary-color);
+  font-family: "Lobster", cursive;
+  color: var(--text-on-primary);
+  display: flex;
+  align-items: center;
+  /* box-shadow: 0 0 1em black; */
+}
+
+.navbar h1 {
+  margin-left: 20vw;
+  font-size: 2.5rem;
+  text-transform: capitalize;
 }
 .sidebar {
+  background: var(--primary-color-light);
   grid-area: sidebar;
-  box-shadow: 0 1em 1em black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* box-shadow: 0 1em 1em black; */
 }
+
+.months ul {
+  list-style-type: none;
+}
+
+.addbutton {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#addmonth {
+  background: var(--secondary-color-dark);
+  color: var(--primary-color-light);
+  border-radius: 100%;
+  border: none;
+  outline: none;
+  margin: 2vh;
+  width: 5rem;
+  height: 5rem;
+  font-size: 2.5rem;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  cursor: pointer;
+  transition: 0.3s;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+#addmonth:hover {
+  background: var(--secondary-color-light);
+}
+/* #addmonth:focus {
+  transform: scale(1.1);
+  transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+} */
+
 .content {
   grid-area: content;
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr 70%;
+  grid-template-rows: 1fr 1fr 70%;
 
-  padding: 1%;
+  padding: 1vh 20vw 10vh 20vw;
   /* justify-items: center; */
 }
 
@@ -68,9 +125,6 @@ body {
   display: flex;
   justify-content: space-around;
 }
-.calendar {
-  justify-self: stretch;
-}
 
 .addHabits input {
   text-align: center;
@@ -80,18 +134,18 @@ body {
   padding: 0.5rem;
   font-size: 2rem;
   border: none;
-  background-color: white;
+  background-color: var(--surface-color);
+  color: var(--secondary-color);
 }
 
 .addHabits button {
-  color: var(--button-main-color);
+  color: var(--secondary-color);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 .addHabits button:hover {
-  color: white;
-  background-color: var(--button-main-color);
-  cursor: pointer;
+  color: var(--surface-color);
+  background-color: var(--secondary-color);
   transition: all 0.3s ease;
 }
 
@@ -106,49 +160,57 @@ body {
 }
 
 .habit-tabs button:hover {
-  color: var(--active-text-color);
+  color: var(--secondary-color);
 }
 
 .calendar {
+  justify-self: stretch;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  gap: 2%;
+}
+
+.calendar-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .calendar-cell:hover {
   transform: scale(115%);
   /* background-color: #cac531; */
 }
+
 .calendar-head {
-  height: 30px;
   font-weight: bold;
   font-size: 1rem;
-  text-align: center;
+  align-items: flex-end;
+  padding: 10% 0%;
 }
 
 .calendar-day {
   padding: 2px;
-  display: inline-block;
-  text-align: center;
-  vertical-align: middle;
   color: black;
   transition: all 0.2s ease-in-out;
+  background: var(--surface-color);
 }
 
 .mini {
-  background-color: chartreuse;
+  background-color: #388e3c;
   color: black;
 }
 
 .plus {
-  background-color: dodgerblue;
+  background-color: #1565c0;
   color: white;
 }
 
 .elite {
-  background-color: firebrick;
+  background-color: var(--secondary-color-dark);
   color: white;
 }
 
 .active-tab {
-  color: var(--active-text-color);
+  color: var(--secondary-color-dark);
+  text-decoration: underline;
 }

@@ -14,13 +14,25 @@
       integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
       crossorigin="anonymous"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <nav class="navbar"></nav>
-    <div class="sidebar"></div>
-    <div class="content">
+    <nav class="navbar">
       <h1>Elastic Habit tracker</h1>
+    </nav>
+    <div class="sidebar">
+      <div class="months">
+        <ul></ul>
+      </div>
+      <div class="addbutton">
+        <button id="addmonth">+</button>
+      </div>
+    </div>
+    <div class="content">
       <div class="addHabits">
         <button id="removeHabit"><i class="far fa-minus-square"></i></button>
         <input type="text" id="habitInput" placeholder="habit to add/remove" />
