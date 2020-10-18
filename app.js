@@ -29,9 +29,10 @@ const btnRemoveHabit = document.getElementById("removeHabit");
 const inputHabit = document.getElementById("habitInput");
 const monthList = document.querySelector(".months ul");
 const btnAddMonth = document.getElementById("addmonth");
+const message = document.getElementById("message");
 
 let habitCategories = ["Sport", "Programmieren", "Achtsamkeit"];
-let habitYearsMonths = { 2020: [9, 10] };
+let habitYearsMonths = { 2020: [9] };
 let habitsTrack = {};
 let activeYear = 2020;
 let activeMonth = 9;
@@ -45,9 +46,14 @@ btnRemoveHabit.addEventListener("click", removeHabit);
 btnAddMonth.addEventListener("click", addMonth);
 
 function loadSidebar() {
+  monthList.innerHTML = "";
   habitYearsMonths[activeYear].forEach((month) => {
     let li = document.createElement("li");
     li.textContent = months[month];
+    li.addEventListener("click", changeActiveMonth);
+    if (month == activeMonth) {
+      li.classList.add("active-tab");
+    }
     monthList.appendChild(li);
   });
 }
@@ -142,19 +148,29 @@ function createButtons() {
 
 function addHabit() {
   const habit = inputHabit.value;
-  habitsTrack[habit] = {};
-  habitCategories.push(habit);
-  updateLocalStorage();
-  inputHabit.value = "";
-  loadCalendar();
+  if (habit === "") {
+    showMessage("error", "Kann nicht hinzufügen. Kein Habitname angegeben");
+  } else {
+    habitsTrack[activeYear][activeMonth][habit] = {};
+    habitCategories.push(habit);
+    updateLocalStorage();
+    inputHabit.value = "";
+    showMessage("success", "Habit wurde hinzugefügt.");
+    loadCalendar();
+  }
 }
 
 function removeHabit() {
   const habit = inputHabit.value;
-  delete habitsTrack[habit];
-  updateLocalStorage();
-  inputHabit.value = "";
-  loadCalendar();
+  if (habit === "") {
+    showMessage("error", "Kann nicht entfernen. Kein Habitname angegeben");
+  } else {
+    delete habitsTrack[activeYear][activeMonth][habit];
+    updateLocalStorage();
+    inputHabit.value = "";
+    showMessage("success", "Habit wurde entfernt.");
+    loadCalendar();
+  }
 }
 
 function loadLocalStorage() {
@@ -179,9 +195,8 @@ function initHabitTrackerObject() {
 }
 
 function addMonth() {
-  let monthToAdd = Math.max(
-    habitYearsMonths[activeYear].map((x) => parseInt(x))
-  );
+  let monthToAdd =
+    Math.max(...habitYearsMonths[activeYear].map((x) => parseInt(x))) + 1;
 
   console.log(monthToAdd);
   if (monthToAdd <= 11) {
@@ -192,8 +207,28 @@ function addMonth() {
     });
   }
   updateLocalStorage();
+  loadSidebar();
 }
 
 function updateLocalStorage() {
   localStorage.setItem("habits", JSON.stringify(habitsTrack));
+}
+
+function changeActiveMonth() {
+  activeMonth = months.indexOf(this.textContent);
+  monthList.querySelectorAll("li").forEach((li) => {
+    li.classList.remove("active-tab");
+  });
+  this.classList.add("active-tab");
+
+  drawGrid();
+}
+
+function showMessage(type, messageText) {
+  message.classList.add(type);
+  message.textContent = messageText;
+  setTimeout(() => {
+    message.textContent = "";
+    message.classList.remove(type);
+  }, 3000);
 }

@@ -9,7 +9,7 @@
 
   --background-color: #ffffff;
   --surface-color: #f5f5f5;
-  --error-color: #ffffff;
+  --error-color: red;
 
   --text-on-primary: #ffffff;
   --text-on-secondary: #ffffff;
@@ -69,8 +69,31 @@ body {
   /* box-shadow: 0 1em 1em black; */
 }
 
+.sidebar .months {
+  padding-left: 2vw;
+}
+.year {
+  display: flex;
+  justify-content: center;
+  padding-top: 2vh;
+  font-size: 2rem;
+}
+
+.year button {
+  border: none;
+  background-color: transparent;
+  font-size: 2rem;
+  padding: 0vh 2vw 0vh 2vw;
+  cursor: pointer;
+}
+
+.year button:hover {
+  color: var(--secondary-color-dark);
+}
+
 .months ul {
   list-style-type: none;
+  font-size: 1.7rem;
 }
 
 .addbutton {
@@ -107,10 +130,21 @@ body {
 .content {
   grid-area: content;
   display: grid;
-  grid-template-rows: 1fr 1fr 70%;
+  grid-template-rows: 1fr 1fr 1fr 70%;
 
   padding: 1vh 20vw 10vh 20vw;
   /* justify-items: center; */
+}
+.content #message {
+  justify-self: center;
+  /* transition: 0.3s ease; */
+}
+
+.error {
+  color: var(--error-color);
+}
+.success {
+  color: #388e3c;
 }
 
 .content h1 {
@@ -131,6 +165,7 @@ body {
 }
 .addHabits input,
 .addHabits button {
+  text-transform: capitalize;
   padding: 0.5rem;
   font-size: 2rem;
   border: none;
@@ -150,6 +185,7 @@ body {
 }
 
 .habit-tabs button {
+  text-transform: capitalize;
   border: none;
   padding: 1rem;
   font-size: 1.4rem;

@@ -25,6 +25,11 @@
       <h1>Elastic Habit tracker</h1>
     </nav>
     <div class="sidebar">
+      <div class="year">
+        <button id="previousMonth"><</button>
+        <p id="yearLabel">2020</p>
+        <button id="nextMonth">></button>
+      </div>
       <div class="months">
         <ul></ul>
       </div>
@@ -33,9 +38,14 @@
       </div>
     </div>
     <div class="content">
+      <p id="message"></p>
       <div class="addHabits">
         <button id="removeHabit"><i class="far fa-minus-square"></i></button>
-        <input type="text" id="habitInput" placeholder="habit to add/remove" />
+        <input
+          type="text"
+          id="habitInput"
+          placeholder="habit to add / remove"
+        />
         <button id="addHabit"><i class="far fa-plus-square"></i></button>
       </div>
       <div class="habit-tabs"></div>
