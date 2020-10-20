@@ -30,6 +30,9 @@ const inputHabit = document.getElementById("habitInput");
 const monthList = document.querySelector(".months ul");
 const btnAddMonth = document.getElementById("addmonth");
 const message = document.getElementById("message");
+const btnPrevYear = document.getElementById("previousYear");
+const btnNextYear = document.getElementById("nextYear");
+const lblYear = document.getElementById("yearLabel");
 
 let habitCategories = ["Sport", "Programmieren", "Achtsamkeit"];
 let habitYearsMonths = { 2020: [9] };
@@ -44,9 +47,12 @@ loadSidebar();
 btnAddHabit.addEventListener("click", addHabit);
 btnRemoveHabit.addEventListener("click", removeHabit);
 btnAddMonth.addEventListener("click", addMonth);
+btnPrevYear.addEventListener("click", changeMonth);
+btnNextYear.addEventListener("click", changeMonth);
 
 function loadSidebar() {
   monthList.innerHTML = "";
+  lblYear.textContent = activeYear;
   habitYearsMonths[activeYear].forEach((month) => {
     let li = document.createElement("li");
     li.textContent = months[month];
@@ -100,7 +106,7 @@ function changeHabit() {
 }
 
 function drawGrid() {
-  let date = new Date(2020, activeMonth, 1);
+  let date = new Date(activeYear, activeMonth, 1);
   let firstDay = date.getDay() + 6;
   calendar.innerHTML = "";
 
@@ -176,7 +182,7 @@ function removeHabit() {
 function loadLocalStorage() {
   habitsTrack = JSON.parse(localStorage.getItem("habits"));
   Object.keys(habitsTrack).forEach((year) => {
-    habitYearsMonths[year] = {};
+    habitYearsMonths[year] = [];
   });
   habitYearsMonths[activeYear] = Object.keys(habitsTrack[activeYear]);
   habitCategories = Object.keys(habitsTrack[activeYear][activeMonth]);
@@ -231,4 +237,27 @@ function showMessage(type, messageText) {
     message.textContent = "";
     message.classList.remove(type);
   }, 3000);
+}
+
+function changeMonth() {
+  if (this.id === "previousYear") {
+    activeYear -= 1;
+  } else {
+    activeYear += 1;
+  }
+
+  if (!Object.keys(habitYearsMonths).includes(activeYear + "")) {
+    habitYearsMonths[activeYear] = [0];
+    habitsTrack[activeYear] = {};
+    habitsTrack[activeYear][0] = {};
+    habitCategories.forEach((habit) => {
+      habitsTrack[activeYear][0][habit] = {};
+    });
+  }
+
+  activeMonth = Object.keys(habitsTrack[activeYear])[0];
+
+  updateLocalStorage();
+  loadSidebar();
+  loadCalendar();
 }
